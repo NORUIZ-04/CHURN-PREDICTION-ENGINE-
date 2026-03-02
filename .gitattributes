@@ -1,0 +1,21 @@
+# Default behavior: Auto-detect text files and ensure they use LF in the repo
+* text=auto
+
+# Force these files to be treated as binary (Git won't touch line endings)
+*.pdf binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.ttf binary
+*.woff binary
+*.woff2 binary
+
+# Force specific text files to always use LF (standard for web/code)
+*.js text eol=lf
+*.jsx text eol=lf
+*.json text eol=lf
+*.css text eol=lf
+*.html text eol=lf
+*.py text eol=lf

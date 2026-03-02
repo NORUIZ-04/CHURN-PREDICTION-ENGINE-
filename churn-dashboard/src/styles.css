@@ -1,0 +1,344 @@
+/* =========================================================
+   1. GLOBAL RESET & FOUNDATION
+========================================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Remove Vite template centering */
+body > div {
+  min-height: 100%;
+}
+
+body {
+  background: #f8fafc;
+  color: #0f172a;
+  font-family: Inter, system-ui, -apple-system, sans-serif;
+  line-height: 1.5;
+  text-rendering: optimizeLegibility;
+}
+
+/* smoother fonts */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* =========================================================
+   2. TYPOGRAPHY NORMALIZATION
+========================================================= */
+
+h1,h2,h3,h4,h5,h6 {
+  margin: 0;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+p { margin: 0; }
+
+a {
+  color: #4f46e5;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* =========================================================
+   3. DASHBOARD LAYOUT STRUCTURE
+========================================================= */
+
+.dashboard-root {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* SIDEBAR */
+
+.sidebar {
+  width: 260px;
+  background: #0f172a;
+  color: white;
+  padding: 22px 16px;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  overflow-y: auto;
+}
+
+/* CONTENT AREA */
+
+.main-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 36px 40px;
+  display: flex;
+  justify-content: center;
+}
+
+.main-content {
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* =========================================================
+   4. SIDEBAR NAVIGATION
+========================================================= */
+
+.sidebar a {
+  color: #cbd5f5;
+  text-decoration: none;
+  padding: 10px 12px;
+  border-radius: 8px;
+  margin-bottom: 6px;
+  font-size: 14px;
+  transition: 0.18s ease;
+  display: block;
+}
+
+.sidebar a:hover {
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+}
+
+.active-link {
+  background: rgba(255,255,255,0.14);
+  color: white !important;
+  font-weight: 500;
+}
+
+/* =========================================================
+   5. PAGE HEADER
+========================================================= */
+
+.page-header {
+  margin-bottom: 28px;
+}
+
+.page-title {
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.page-subtitle {
+  color: #64748b;
+  font-size: 14px;
+}
+
+/* =========================================================
+   6. CARD DESIGN (PREMIUM)
+========================================================= */
+
+.card {
+  background: white;
+  border-radius: 14px;
+  padding: 22px;
+  margin-bottom: 20px;
+  box-shadow:
+    0 1px 2px rgba(0,0,0,0.05),
+    0 10px 24px rgba(0,0,0,0.05);
+  transition: 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 12px 32px rgba(0,0,0,0.08);
+}
+
+/* =========================================================
+   7. BUTTONS
+========================================================= */
+
+button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.15s ease;
+}
+
+button:hover {
+  background: #1d4ed8;
+}
+
+button.secondary { background: #64748b; }
+button.success { background: #16a34a; }
+button.danger { background: #dc2626; }
+
+/* =========================================================
+   8. INPUTS & FORMS
+========================================================= */
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  margin-top: 6px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  background: white;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+/* =========================================================
+   9. TABLES (CLEAN ENTERPRISE STYLE)
+========================================================= */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+thead {
+  background: #f1f5f9;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+  font-size: 14px;
+}
+
+tr:nth-child(even) {
+  background: #f8fafc;
+}
+
+tr:hover {
+  background: #e0f2fe;
+}
+
+/* =========================================================
+   10. BADGES & STATUS LABELS
+========================================================= */
+
+.badge {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.badge-high {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.badge-medium {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.badge-low {
+  background: #dcfce7;
+  color: #166534;
+}
+
+/* =========================================================
+   11. GRID HELPERS
+========================================================= */
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+/* =========================================================
+   12. CHART & DATA VISUALIZATION FIXES
+========================================================= */
+
+.chart-card {
+  width: 100%;
+  height: 320px;
+  min-height: 320px;
+  background: white;
+  padding: 18px;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+}
+
+.recharts-responsive-container {
+  min-width: 0 !important;
+}
+
+/* =========================================================
+   13. SCROLLBAR (MODERN)
+========================================================= */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* =========================================================
+   14. RESPONSIVE IMPROVEMENTS
+========================================================= */
+
+@media (max-width: 1024px) {
+  .main-area {
+    padding: 24px;
+  }
+
+  .main-content {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    display: none; /* mobile ready */
+  }
+
+  .main-area {
+    padding: 20px;
+  }
+
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+}

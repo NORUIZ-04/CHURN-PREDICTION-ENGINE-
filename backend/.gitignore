@@ -1,0 +1,95 @@
+# -----------------------------------------------------------------------------
+# 1. PYTHON (FastAPI Backend)
+# -----------------------------------------------------------------------------
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environments
+# (Common names for virtual env folders)
+venv/
+env/
+.venv/
+.env/
+
+# Distribution / Packaging
+dist/
+build/
+*.egg-info/
+.eggs/
+
+# Unit Test / Coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Jupyter Notebook (if you use notebooks for testing API logic)
+.ipynb_checkpoints
+
+# -----------------------------------------------------------------------------
+# 2. NODE.JS / REACT (Frontend)
+# -----------------------------------------------------------------------------
+
+# Dependencies
+node_modules/
+/.pnp
+.pnp.js
+
+# Testing
+coverage/
+
+# Production Build
+build/
+dist/
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# -----------------------------------------------------------------------------
+# 3. ENVIRONMENT VARIABLES (CRITICAL)
+# -----------------------------------------------------------------------------
+
+# Ignore all .env files to protect your Groq API keys
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.env
+
+# Exception: Keep the example file so devs know what keys are needed
+!env.example
+!.env.example
+
+# -----------------------------------------------------------------------------
+# 4. IDE & OPERATING SYSTEM
+# -----------------------------------------------------------------------------
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# VS Code
+.vscode/
+# (You might want to commit settings.json, but usually exclude local history)
+*.code-workspace
+
+# JetBrains (PyCharm / WebStorm)
+.idea/
+*.iml
