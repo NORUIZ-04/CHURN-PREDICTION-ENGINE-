@@ -60,7 +60,7 @@ def qini_curve(y, t, uplift):
 
 def auuc_score(xs, ys):
 
-    return np.trapz(ys, xs)
+    return np.trapezoid(ys, xs)
 
 
 # ----------------------------------------------------
@@ -68,8 +68,8 @@ def auuc_score(xs, ys):
 def qini_coefficient(xs, ys):
 
     random_line = ys[-1] * xs
-    area_model = np.trapz(ys, xs)
-    area_random = np.trapz(random_line, xs)
+    area_model = np.trapezoid(ys, xs)
+    area_random = np.trapezoid(random_line, xs)
 
     return area_model - area_random
 
