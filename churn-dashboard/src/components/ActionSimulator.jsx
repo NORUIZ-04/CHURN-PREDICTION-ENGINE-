@@ -102,14 +102,14 @@ export default function ActionSimulator({ row }) {
                 <div className="as-kpi-top" style={{background:"#00e5c3"}}/>
                 <div className="as-kpi-label">New Probability</div>
                 <div className="as-kpi-value" style={{color:"#00e5c3"}}>
-                  {Number(sim.simulated_probability ?? 0).toFixed(3)}
+                  {Number(sim.simulated_probability ?? 0).toFixed(10)}
                 </div>
               </div>
               <div className="as-kpi">
                 <div className="as-kpi-top" style={{background:deltaColor}}/>
                 <div className="as-kpi-label">Delta</div>
                 <div className="as-kpi-value" style={{color:deltaColor}}>
-                  {delta !== null && delta >= 0 ? "+" : ""}{Number(sim.delta ?? 0).toFixed(3)}
+                  {delta !== null && delta >= 0 ? "+" : ""}{Number(sim.delta ?? 0).toFixed(10)}
                 </div>
               </div>
             </div>

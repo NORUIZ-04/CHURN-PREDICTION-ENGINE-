@@ -268,6 +268,19 @@ export default function BudgetOptimizer() {
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob); a.download = "budget_plan.csv"; a.click();
   }
+function formatValue(key, value) {
+  if (key === "drivers" && Array.isArray(value)) {
+    return value
+    .map(d => `${d.feature}: ${d.impact?.toFixed(2)}`)
+  .join(" | ");
+  }
+
+  if (typeof value === "object" && value !== null) {
+    return JSON.stringify(value);
+  }
+
+  return value;
+}
 
   const cols = sorted.length ? Object.keys(sorted[0]) : [];
 
@@ -415,7 +428,7 @@ export default function BudgetOptimizer() {
                           else if (c === "expected_gain" || c === "uplift") cls = "bo-td-good";
                           return (
                             <td key={j} className={cls}>
-                              {isNum ? v.toFixed(3) : String(v ?? "")}
+                              {isNum ? v.toFixed(3) : formatValue(c, v)}
                             </td>
                           );
                         })}

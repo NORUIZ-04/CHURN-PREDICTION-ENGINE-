@@ -24,6 +24,7 @@ from uplift_policy_validation_api import router as uplift_validation_router
 from routers.timetochurn_router import router as timetochurn_router
 from routers.insights import router as insights_router
 from routers.dashboard_router import router as dashboard_router
+from api.data_sources import router as data_sources_router
 
 app = FastAPI(
     title="Decision Intelligence Backend",
@@ -56,6 +57,7 @@ app.include_router(uplift_validation_router)
 app.include_router(timetochurn_router)
 app.include_router(insights_router)
 app.include_router(dashboard_router)
+app.include_router(data_sources_router)
 
 @app.get("/")
 def health():

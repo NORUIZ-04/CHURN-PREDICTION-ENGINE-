@@ -7,8 +7,15 @@ python-multipart
 joblib
 xgboost
 shap
-lifelines
+lifelines==0.28.0
 groq
 python-dotenv
 reportlab
 requests
+pyyaml
+python-Levenshtein
+pyarrow
+sqlalchemy
+psycopg2-binary
+pymysql
+pymongo

@@ -185,7 +185,7 @@ export default function UrgentDecisionPanel() {
                   const us = urgencyStyle(r.urgency_score);
                   return (
                     <tr key={r.customer_id ?? i}>
-                      <td className="udp-td-muted">{String(i+1).padStart(2,"0")}</td>
+                      <td className="udp-td-muted">{String(i+1).padStart("0")}</td>
                       <td style={{fontWeight:500}}>{r.customer_id}</td>
                       <td>
                         <div className="udp-bar-wrap">

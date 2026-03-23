@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDatasetStore } from "../store/datasetStore";
 import { datasetApi } from "../api/datasetApi";
-import { fetchInsights } from "../api/insights";
+
 
 const styles = `
   @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:wght@300;400;500&display=swap');
@@ -223,55 +223,43 @@ const styles = `
   @keyframes loadSlide{0%{transform:translateX(-100%)}100%{transform:translateX(350%)}}
 `;  
 
+
 export default function ExecutiveInsights() {
   const { datasetPath } = useDatasetStore();
 
   const [insights, setInsights] = useState(null);
   const [loading, setLoading] = useState(true);
   const [lastUpdated, setLastUpdated] = useState(null);
-  const [refreshing, setRefreshing] = useState(false);
-  const [error, setError] = useState(null);
 
+  // extract filename safely
   const datasetName = datasetPath?.split("\\").pop().split("/").pop();
 
-  const loadInsights = async (silent = false) => {
+  const loadInsights = async () => {
     if (!datasetName) return;
 
-    if (!silent) setLoading(true);
-    setError(null);
+    setLoading(true);
 
     try {
-      const res = await datasetApi.fetchInsights();
+      const res = await datasetApi.executiveInsights(
+        datasetName,
+        { headers: { "Cache-Control": "no-cache" } } // prevent caching
+      );
 
-      // backend returns { insights: {...} }
-      const payload = res.data.insights || res.data;
-
-      setInsights(payload);
+      setInsights(res.data);
       setLastUpdated(new Date());
     } catch (err) {
       console.error("Insights error:", err);
-      setError("Unable to load insights");
     }
 
     setLoading(false);
-    setRefreshing(false);
   };
 
   useEffect(() => {
     loadInsights();
   }, [datasetName]);
 
-  // OPTIONAL: auto refresh every 60 seconds
-  useEffect(() => {
-    if (!datasetName) return;
-    const timer = setInterval(() => loadInsights(true), 60000);
-    return () => clearInterval(timer);
-  }, [datasetName]);
-
-  const refresh = () => {
-    setRefreshing(true);
-    loadInsights(true);
-  };
+  // manual refresh button
+  const refresh = () => loadInsights();
 
   if (!datasetName)
     return (
@@ -281,7 +269,7 @@ export default function ExecutiveInsights() {
           <div className="ei-empty-icon">📊</div>
           <div className="ei-empty-title">No Dataset Loaded</div>
           <div className="ei-empty-sub">
-            Upload or ingest a dataset to generate intelligence.
+            Upload dataset to generate intelligence.
           </div>
         </div>
       </>
@@ -300,15 +288,13 @@ export default function ExecutiveInsights() {
       </>
     );
 
-  if (error || !insights)
+  if (!insights)
     return (
       <>
         <style>{styles}</style>
         <div className="ei-empty">
           <div className="ei-empty-icon">⚠</div>
-          <div className="ei-empty-title">
-            {error || "Failed to load insights"}
-          </div>
+          <div className="ei-empty-title">Failed to load insights</div>
         </div>
       </>
     );
@@ -351,14 +337,16 @@ export default function ExecutiveInsights() {
 
         {/* HEADER */}
         <div className="ei-header">
-          <div className="ei-header-label">Executive Intelligence</div>
+          <div className="ei-header-label">
+            Executive Intelligence
+          </div>
 
           <div className="ei-header-title">
             Retention <span>Intelligence</span>
           </div>
 
           <div className="ei-header-summary">
-            {insights.executive_summary || "AI-generated retention insights based on customer behavior and churn signals."}
+            {insights.executive_summary}
           </div>
 
           <div className="ei-header-meta">
@@ -372,9 +360,7 @@ export default function ExecutiveInsights() {
               </div>
             )}
 
-            <button onClick={refresh}>
-              {refreshing ? "Refreshing..." : "Refresh"}
-            </button>
+            <button onClick={refresh}>Refresh</button>
           </div>
         </div>
 
@@ -382,9 +368,15 @@ export default function ExecutiveInsights() {
         <div className="ei-kpi-grid">
           {kpis.map((k, i) => (
             <div className="ei-kpi" key={i}>
-              <div className="ei-kpi-top" style={{ background: k.color }} />
+              <div
+                className="ei-kpi-top"
+                style={{ background: k.color }}
+              />
               <div className="ei-kpi-label">{k.label}</div>
-              <div className="ei-kpi-value" style={{ color: k.color }}>
+              <div
+                className="ei-kpi-value"
+                style={{ color: k.color }}
+              >
                 {k.value}
               </div>
             </div>
@@ -396,7 +388,9 @@ export default function ExecutiveInsights() {
           <div className="ei-alert">
             <div className="ei-alert-icon">⚠</div>
             <div className="ei-alert-content">
-              <div className="ei-alert-title">Emerging Signals</div>
+              <div className="ei-alert-title">
+                Emerging Signals
+              </div>
               {alerts.map((a, i) => (
                 <div className="ei-alert-item" key={i}>
                   • {a}
@@ -411,7 +405,9 @@ export default function ExecutiveInsights() {
 
           {/* DRIVERS */}
           <div className="ei-panel">
-            <div className="ei-panel-title">Top Churn Drivers</div>
+            <div className="ei-panel-title">
+              Top Churn Drivers
+            </div>
 
             {(insights.risk_drivers || []).map((d, i) => (
               <div key={i} className="ei-driver">
@@ -422,7 +418,9 @@ export default function ExecutiveInsights() {
                 <div className="ei-driver-track">
                   <div
                     className="ei-driver-fill"
-                    style={{ width: `${d.impact_strength * 100}%` }}
+                    style={{
+                      width: `${d.impact_strength * 100}%`,
+                    }}
                   />
                 </div>
               </div>
@@ -431,12 +429,16 @@ export default function ExecutiveInsights() {
 
           {/* SEGMENTS */}
           <div className="ei-panel">
-            <div className="ei-panel-title">Segment Risk</div>
+            <div className="ei-panel-title">
+              Segment Risk
+            </div>
 
             {(insights.segment_alerts || []).map((s, i) => (
               <div key={i} className="ei-seg-item">
                 <div>
-                  <div className="ei-seg-name">{s.segment}</div>
+                  <div className="ei-seg-name">
+                    {s.segment}
+                  </div>
                   <div className="ei-seg-meta">
                     {s.customers} customers
                   </div>

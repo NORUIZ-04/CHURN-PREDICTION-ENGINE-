@@ -307,7 +307,7 @@ export default function Explainability() {
                         <div className="ex-shap-track">
                           <div className="ex-shap-fill" style={{width:`${pct}%`,background:color}}/>
                         </div>
-                        <div className="ex-shap-val" style={{color}}>{Number(f.impact).toFixed(4)}</div>
+                        <div className="ex-shap-val" style={{color}}>{Number(f.impact).toFixed(10)}</div>
                       </div>
                     </div>
                   );

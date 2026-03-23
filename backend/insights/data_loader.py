@@ -6,9 +6,12 @@ UPLOAD_DIR = BASE_DIR / "uploads"
 
 def load_dataset(filename: str):
     path = UPLOAD_DIR / filename
+
     if not path.exists():
         raise FileNotFoundError(f"Dataset not found: {path}")
+
     return pd.read_csv(path)
+
 
 def load_predictions(filename: str):
     base = Path(filename).stem
@@ -17,7 +20,6 @@ def load_predictions(filename: str):
         path = UPLOAD_DIR / name
         if path.exists():
             return pd.read_csv(path)
-        print(f"⚠ Missing file: {name}")
         return None
 
     churn = safe_load(f"churn_output_{base}.csv")

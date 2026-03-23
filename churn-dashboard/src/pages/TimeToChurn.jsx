@@ -303,7 +303,6 @@ export default function TimeToChurn() {
                 <th>Time to Churn</th>
                 <th>Window</th>
                 <th>Churn Risk</th>
-                <th>Urgency Score</th>
               </tr>
             </thead>
             <tbody>
@@ -323,14 +322,6 @@ export default function TimeToChurn() {
                     </td>
                     <td style={{color: r.churn_probability > 0.7 ? "#ff4d6d" : r.churn_probability > 0.4 ? "#ffc107" : "#00e5c3", fontWeight:600}}>
                       {r.churn_probability?.toFixed(3)}
-                    </td>
-                    <td>
-                      <div className="ttc-urg-wrap">
-                        <div className="ttc-urg-track">
-                          <div className="ttc-urg-fill" style={{width:`${(r.urgency_score??0)*100}%`,background:uc}}/>
-                        </div>
-                        <span style={{fontSize:11,color:uc}}>{(r.urgency_score??0).toFixed(2)}</span>
-                      </div>
                     </td>
                   </tr>
                 );

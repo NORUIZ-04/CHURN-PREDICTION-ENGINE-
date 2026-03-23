@@ -1,0 +1,34 @@
+tenure:
+  - tenure
+  - tenure_months
+  - months_with_company
+  - customer_age_months
+
+monthly_charges:
+  - monthly_fee
+  - monthly_bill
+  - subscription_fee
+  - monthly_cost
+
+total_charges:
+  - total_spend
+  - lifetime_value
+  - total_amount_paid
+
+keeps_service_calls:
+  - support_calls
+  - complaints
+  - service_requests
+
+contract_type:
+  - contract
+  - plan_type
+  - subscription_type
+
+payment_method:
+  - payment_mode
+  - billing_method
+
+internet_service:
+  - internet_plan
+  - broadband_type

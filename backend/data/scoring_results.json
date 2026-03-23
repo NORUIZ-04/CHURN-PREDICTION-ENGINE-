@@ -1,0 +1,13 @@
+[
+  {
+    "dataset_path": "data/processed\\dataset_20260302_154416.parquet",
+    "insights": {
+      "total_customers": 4,
+      "high_risk_customers": 0,
+      "medium_risk_customers": 0,
+      "average_time_to_churn_months": 19.5,
+      "predicted_retention_improvement": 18.35
+    },
+    "timestamp": "2026-03-02T15:44:17.167984"
+  }
+]

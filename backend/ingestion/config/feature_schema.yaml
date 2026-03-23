@@ -1,0 +1,24 @@
+required_features:
+  - tenure
+  - monthly_charges
+  - total_charges
+  - contract_type
+
+optional_features:
+  - keeps_service_calls
+  - internet_service
+  - payment_method
+  - avg_monthly_usage
+  - support_tickets
+  - late_payments
+  - tenure_bucket
+  - is_senior
+  - has_dependents
+
+default_values:
+  keeps_service_calls: 0
+  support_tickets: 0
+  late_payments: 0
+  avg_monthly_usage: 0
+  is_senior: false
+  has_dependents: false

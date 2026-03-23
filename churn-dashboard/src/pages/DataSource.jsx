@@ -174,7 +174,6 @@ const styles = `
   .ds-msg.error   { background:rgba(255,77,109,0.08);border:1px solid rgba(255,77,109,0.2);color:#ff4d6d; }
   .ds-msg.warn    { background:rgba(255,193,7,0.08);border:1px solid rgba(255,193,7,0.2);color:#ffc107; }
 `;
-
 function getMsgType(msg) {
   if (msg.startsWith("✅")) return "success";
   if (msg.startsWith("❌")) return "error";
@@ -182,169 +181,377 @@ function getMsgType(msg) {
 }
 
 export default function DataSource() {
-  const [file, setFile]       = useState(null);
-  const [msg, setMsg]         = useState("");
-  const [result, setResult]   = useState(null);
+  const [file, setFile] = useState(null);
+  const [msg, setMsg] = useState("");
+  const [result, setResult] = useState(null);
   const [uploading, setUploading] = useState(false);
 
-  const [synN, setSynN]       = useState(1000);
+  const [synN, setSynN] = useState(1000);
   const [synRate, setSynRate] = useState(0.3);
   const [generating, setGenerating] = useState(false);
 
-  const [conn, setConn]       = useState("");
-  const [testing, setTesting] = useState(false);
-
   const setDatasetPath = useDatasetStore(s => s.setDatasetPath);
   const navigate = useNavigate();
+  const [tables, setTables] = useState([]);
+const [selectedTable, setSelectedTable] = useState("");
+const [previewRows, setPreviewRows] = useState([]);
+  // DB CONFIG
+  const [dbConfig, setDbConfig] = useState({
+    type: "postgres",
+    host: "",
+    port: "",
+    database: "",
+    user: "",
+    password: "",
+    path: "",
+    uri: ""   // 🔥 needed for MongoDB
+  });
+
+  const [dbStatus, setDbStatus] = useState("");
+  const [testingDB, setTestingDB] = useState(false);
 
   async function uploadFile() {
-    if (!file) { setMsg("⚠️ Please select a CSV file"); return; }
+    if (!file) {
+      setMsg("⚠️ Please select a CSV file");
+      return;
+    }
+
     const form = new FormData();
     form.append("file", file);
     setUploading(true);
+
     try {
       const res = await api.post("/data/upload", form);
       setResult(res.data);
       setMsg("✅ Upload successful");
-      const path = res.data.saved_as || res.data.file || res.data.file_path || res.data.dataset_path;
-      if (!path) { setMsg("Upload OK but dataset path missing ❌"); setUploading(false); return; }
+
+      const path =
+        res.data.saved_as ||
+        res.data.file ||
+        res.data.file_path ||
+        res.data.dataset_path;
+
+      if (!path) {
+        setMsg("Upload OK but dataset path missing ❌");
+        return;
+      }
+
       setDatasetPath(path);
       navigate("/dashboard/overview");
-    } catch { setMsg("❌ Upload failed"); }
+    } catch {
+      setMsg("❌ Upload failed");
+    }
+
     setUploading(false);
   }
 
   async function generateSynthetic() {
     setGenerating(true);
     try {
-      const res = await api.post(`/data/synthetic?n_customers=${synN}&churn_rate=${synRate}`);
-      const path = res.data.file || res.data.saved_as || res.data.file_path;
-      if (path) { setDatasetPath(path); navigate("/dashboard/overview"); }
+      const res = await api.post(
+        `/data/synthetic?n_customers=${synN}&churn_rate=${synRate}`
+      );
+
+      const path =
+        res.data.file ||
+        res.data.saved_as ||
+        res.data.file_path;
+
+      if (path) {
+        setDatasetPath(path);
+        navigate("/dashboard/overview");
+      }
+
       setMsg("✅ Synthetic dataset created");
-    } catch { setMsg("❌ Synthetic generation failed"); }
+    } catch {
+      setMsg("❌ Synthetic generation failed");
+    }
     setGenerating(false);
   }
 
-  async function testDB() {
-    setTesting(true);
+  // ✅ FIXED DB CONNECTION TEST
+  async function testDBConnection() {
+    setTestingDB(true);
+    setDbStatus("");
+
     try {
-      await api.post("/data/test-db", null, { params: { conn_string: conn } });
-      setMsg("✅ DB connection successful");
-    } catch { setMsg("❌ DB connection failed"); }
-    setTesting(false);
+      // build payload correctly
+      const payload =
+        dbConfig.type === "mongodb"
+          ? {
+              type: "mongodb",
+              uri: dbConfig.uri,
+              database: dbConfig.database
+            }
+          : dbConfig;
+
+      const res = await api.post(
+        "api/data-source/test",
+        payload
+      );
+
+      if (res.data.status === "connected") {
+        setDbStatus("✅ Connection successful");
+          const tablesRes = await api.post("/api/data-source/tables", payload);
+  setTables(tablesRes.data.tables || []);
+      } else {
+        setDbStatus(`❌ ${res.data.error || "Connection failed"}`);
+      }
+
+    } catch (err) {
+      console.error(err);
+      setDbStatus("❌ Unable to connect");
+    }
+
+    setTestingDB(false);
   }
 
   return (
-    <><style>{styles}</style>
+  <>
+    <style>{styles}</style>
     <div className="ds-root">
 
       {/* HEADER */}
       <div className="ds-header">
-        <div className="ds-title">Data <span>Source</span></div>
-        <div className="ds-subtitle">Upload, generate or connect your customer dataset to get started</div>
+        <div className="ds-title">
+          Data <span>Source</span>
+        </div>
+        <div className="ds-subtitle">
+          Upload, generate, or connect your data
+        </div>
       </div>
 
-      {/* STEPS */}
-      <div className="ds-steps">
-        {[
-          { n:"01", label:"Upload or Generate Dataset" },
-          { n:"02", label:"Auto-validation & Profiling" },
-          { n:"03", label:"Explore in Dataset Overview" },
-        ].map((s,i) => (
-          <div className={`ds-step${i===0?" active":""}`} key={i}>
-            <div className="ds-step-num">{s.n}</div>
-            <div className="ds-step-label">{s.label}</div>
-          </div>
-        ))}
-      </div>
-
-      {/* UPLOAD */}
+      {/* ================= UPLOAD PANEL ================= */}
       <div className="ds-panel">
-        <div className="ds-panel-header">
-          <div className="ds-panel-icon" style={{background:"rgba(0,229,195,0.1)",color:"#00e5c3"}}>📂</div>
-          <div className="ds-panel-info">
-            <div className="ds-panel-title">Upload Dataset</div>
-            <div className="ds-panel-desc">Upload your customer CSV file for churn analysis</div>
-          </div>
-        </div>
+        <div className="ds-panel-title">Upload Dataset</div>
 
-        <div className="ds-upload-zone">
-          <input type="file" accept=".csv" onChange={e => setFile(e.target.files[0])} />
-          <div className="ds-upload-icon">⬆</div>
-          <div className="ds-upload-text">Drop your CSV here or <strong>click to browse</strong></div>
-          <div className="ds-upload-hint">Supports .csv files up to 100MB</div>
-          {file && <div className="ds-file-name">📄 {file.name}</div>}
-        </div>
+        <input
+          type="file"
+          accept=".csv"
+          onChange={(e) => setFile(e.target.files[0])}
+        />
 
-        <button className="ds-btn ds-btn-primary" onClick={uploadFile} disabled={uploading}>
-          {uploading ? <><div className="ds-btn-spinner"/>Uploading...</> : <>⬆ Upload & Validate</>}
+        <button
+          className="ds-btn ds-btn-primary"
+          onClick={uploadFile}
+          disabled={uploading}
+        >
+          {uploading ? "Uploading..." : "Upload & Analyze"}
         </button>
 
-        {msg && <div className={`ds-msg ${getMsgType(msg)}`}>{msg}</div>}
-
-        {result && (
-          <div className="ds-result">
-            <div className="ds-result-title">Upload Result</div>
-            <div className="ds-result-row"><span className="ds-result-key">Rows</span><span className="ds-result-val">{result.rows?.toLocaleString()}</span></div>
-            <div className="ds-result-row"><span className="ds-result-key">Columns</span><span className="ds-result-val">{result.columns?.length}</span></div>
-            <div className="ds-result-row"><span className="ds-result-key">Saved As</span><span className="ds-result-val" style={{fontSize:11,wordBreak:"break-all"}}>{result.saved_as}</span></div>
+        {msg && (
+          <div className={`ds-msg ${getMsgType(msg)}`}>
+            {msg}
           </div>
         )}
       </div>
 
-      {/* SYNTHETIC */}
+      {/* ================= SYNTHETIC PANEL ================= */}
       <div className="ds-panel">
-        <div className="ds-panel-header">
-          <div className="ds-panel-icon" style={{background:"rgba(124,106,255,0.1)",color:"#7c6aff"}}>⚡</div>
-          <div className="ds-panel-info">
-            <div className="ds-panel-title">Synthetic Dataset Generator</div>
-            <div className="ds-panel-desc">Generate realistic customer data for testing and demos</div>
-          </div>
+        <div className="ds-panel-title">
+          Synthetic Dataset Generator
         </div>
 
-        {/* Customers slider */}
-        <div className="ds-slider-wrap">
-          <div className="ds-slider-top">
-            <div className="ds-label">Number of Customers</div>
-            <div className="ds-slider-val">{Number(synN).toLocaleString()}</div>
-          </div>
-          <input type="range" className="ds-slider" min={100} max={25000} step={100} value={synN} onChange={e=>setSynN(Number(e.target.value))} />
-        </div>
+        <input
+          type="range"
+          min={100}
+          max={25000}
+          step={100}
+          value={synN}
+          onChange={(e) => setSynN(Number(e.target.value))}
+        />
 
-        {/* Churn rate slider */}
-        <div className="ds-slider-wrap">
-          <div className="ds-slider-top">
-            <div className="ds-label">Target Churn Rate</div>
-            <div className="ds-slider-val ds-churn-slider-val" style={{color:"#ff4d6d"}}>{(synRate*100).toFixed(0)}%</div>
-          </div>
-          <input type="range" className="ds-slider danger" min={0.05} max={0.8} step={0.01} value={synRate} onChange={e=>setSynRate(Number(e.target.value))} />
-        </div>
+        <input
+          type="range"
+          min={0.05}
+          max={0.8}
+          step={0.01}
+          value={synRate}
+          onChange={(e) => setSynRate(Number(e.target.value))}
+        />
 
-        <button className="ds-btn ds-btn-primary" onClick={generateSynthetic} disabled={generating}>
-          {generating ? <><div className="ds-btn-spinner"/>Generating...</> : <>⚡ Generate Synthetic Dataset</>}
+        <button
+          className="ds-btn ds-btn-primary"
+          onClick={generateSynthetic}
+          disabled={generating}
+        >
+          {generating ? "Generating..." : "Generate Dataset"}
         </button>
       </div>
 
-      {/* DATABASE */}
+      {/* ================= DATABASE CONNECTION ================= */}
       <div className="ds-panel">
-        <div className="ds-panel-header">
-          <div className="ds-panel-icon" style={{background:"rgba(255,193,7,0.1)",color:"#ffc107"}}>◉</div>
-          <div className="ds-panel-info">
-            <div className="ds-panel-title">Database Connection</div>
-            <div className="ds-panel-desc">Test a live database connection string</div>
-          </div>
+        <div className="ds-panel-title">
+          External Database Connection
         </div>
 
-        <div className="ds-form-group" style={{marginBottom:16}}>
-          <label className="ds-label">Connection String</label>
-          <input className="ds-input" placeholder="postgresql://user:pass@host:5432/db" value={conn} onChange={e=>setConn(e.target.value)} />
+        <div className="ds-form-group">
+          <label className="ds-label">Database Type</label>
+          <select
+            className="ds-input"
+            value={dbConfig.type}
+            onChange={(e) =>
+              setDbConfig({ ...dbConfig, type: e.target.value })
+            }
+          >
+            <option value="postgres">PostgreSQL</option>
+            <option value="mysql">MySQL</option>
+            <option value="sqlite">SQLite</option>
+            <option value="mongodb">MongoDB</option>
+          </select>
         </div>
 
-        <button className="ds-btn ds-btn-outline" onClick={testDB} disabled={testing}>
-          {testing ? <><div className="ds-btn-spinner" style={{borderTopColor:"#4a5568"}}/>Testing...</> : <>◉ Test Connection</>}
+        {dbConfig.type === "sqlite" && (
+          <input
+            className="ds-input"
+            placeholder="Database file path"
+            onChange={(e) =>
+              setDbConfig({ ...dbConfig, path: e.target.value })
+            }
+          />
+        )}
+
+        {dbConfig.type === "mongodb" && (
+          <>
+            <input
+              className="ds-input"
+              placeholder="mongodb://localhost:27017"
+              onChange={(e) =>
+                setDbConfig({ ...dbConfig, uri: e.target.value })
+              }
+            />
+            <input
+              className="ds-input"
+              placeholder="Database name"
+              onChange={(e) =>
+                setDbConfig({ ...dbConfig, database: e.target.value })
+              }
+            />
+          </>
+        )}
+
+        {dbConfig.type !== "sqlite" &&
+          dbConfig.type !== "mongodb" && (
+            <>
+              <input
+                className="ds-input"
+                placeholder="Host"
+                onChange={(e) =>
+                  setDbConfig({ ...dbConfig, host: e.target.value })
+                }
+              />
+              <input
+                className="ds-input"
+                placeholder="Port"
+                onChange={(e) =>
+                  setDbConfig({ ...dbConfig, port: e.target.value })
+                }
+              />
+              <input
+                className="ds-input"
+                placeholder="Database"
+                onChange={(e) =>
+                  setDbConfig({ ...dbConfig, database: e.target.value })
+                }
+              />
+              <input
+                className="ds-input"
+                placeholder="User"
+                onChange={(e) =>
+                  setDbConfig({ ...dbConfig, user: e.target.value })
+                }
+              />
+              <input
+                className="ds-input"
+                type="password"
+                placeholder="Password"
+                onChange={(e) =>
+                  setDbConfig({ ...dbConfig, password: e.target.value })
+                }
+              />
+            </>
+          )}
+
+        <button
+          className="ds-btn ds-btn-outline"
+          onClick={testDBConnection}
+          disabled={testingDB}
+        >
+          {testingDB ? "Testing..." : "Test Connection"}
         </button>
+
+        {dbStatus && (
+          <div className={`ds-msg ${getMsgType(dbStatus)}`}>
+            {dbStatus}
+          </div>
+        )}
+
+        {/* TABLES */}
+        {tables.length > 0 && (
+          <>
+            <div className="ds-form-group" style={{ marginTop: 16 }}>
+              <label className="ds-label">
+                Select Table / Collection
+              </label>
+              <select
+                className="ds-input"
+                value={selectedTable}
+                onChange={(e) =>
+                  setSelectedTable(e.target.value)
+                }
+              >
+                <option value="">Select</option>
+                {tables.map((t) => (
+                  <option key={t} value={t}>
+                    {t}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <button
+              className="ds-btn ds-btn-outline"
+              style={{ marginTop: 10 }}
+              onClick={async () => {
+                const payload =
+                  dbConfig.type === "mongodb"
+                    ? {
+                        type: "mongodb",
+                        uri: dbConfig.uri,
+                        database: dbConfig.database,
+                        table: selectedTable
+                      }
+                    : {
+                        ...dbConfig,
+                        table: selectedTable
+                      };
+
+                const res = await api.post(
+                  "/api/data-source/preview",
+                  payload
+                );
+
+                setPreviewRows(res.data.rows || []);
+              }}
+            >
+              Preview Data
+            </button>
+
+            {previewRows.length > 0 && (
+              <div className="ds-result">
+                <div className="ds-result-title">
+                  Preview
+                </div>
+                <pre style={{ fontSize: 11 }}>
+                  {JSON.stringify(previewRows, null, 2)}
+                </pre>
+              </div>
+            )}
+          </>
+        )}
       </div>
 
-    </div></>
-  );
+    </div>
+  </>
+);
 }
