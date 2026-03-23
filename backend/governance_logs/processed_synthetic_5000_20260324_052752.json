@@ -1,0 +1,57 @@
+{
+  "report_id": "ed22a3ee-f359-440d-80e0-2967413bd3fb",
+  "generated_at": "2026-03-24T05:27:52.810504",
+  "dataset_size": 5000,
+  "adwin_results": [
+    {
+      "feature": "tenure",
+      "drift_detected": false,
+      "n_detections": 0,
+      "current_mean": 36.4132,
+      "baseline_mean": 36.4132,
+      "change_magnitude": 0.0,
+      "status": "STABLE"
+    },
+    {
+      "feature": "usage_volatility",
+      "drift_detected": false,
+      "n_detections": 0,
+      "current_mean": 0.5021551794511441,
+      "baseline_mean": 0.5021551794511441,
+      "change_magnitude": 0.0,
+      "status": "STABLE"
+    },
+    {
+      "feature": "CLV",
+      "drift_detected": false,
+      "n_detections": 0,
+      "current_mean": 3639.4549488155485,
+      "baseline_mean": 3639.4549488155485,
+      "change_magnitude": 0.0,
+      "status": "STABLE"
+    }
+  ],
+  "cusum_result": {
+    "cusum_alert": false,
+    "S_high_current": 0.0,
+    "S_low_current": 0.0,
+    "threshold_h": 0.0,
+    "direction": "STABLE",
+    "days_since_last_reset": 5000
+  },
+  "fairness_results": [],
+  "confidence_result": {
+    "confidence_score": 0.47,
+    "confidence_level": "LOW",
+    "confidence_color": "red",
+    "drift_score": 1.0,
+    "fairness_score": 0.0,
+    "calibration_score": 0.2799999999999999,
+    "ECE_current": 0.07200000000000001,
+    "recommendation": "Retrain model",
+    "history": []
+  },
+  "overall_status": "CRITICAL",
+  "active_alerts": [],
+  "recommendations": []
+}
