@@ -15,7 +15,7 @@ from routers.budget_router import router as budget_router
 from routers.decision_router import router as decision_router
 from routers.llm_router import router as llm_router
 from routers.report_router import router as report_router
-from routers.governance_router import router as governance_router
+from routers.governance import router as governance
 from routers.data_source_router import router as data_source_router
 from routers.dataset_overview_router import router as dataset_router
 from routers.simulator_router import router as simulator_router
@@ -49,7 +49,7 @@ app.include_router(decision_router)
 app.include_router(prep_router)
 app.include_router(llm_router)
 app.include_router(report_router)
-app.include_router(governance_router)
+app.include_router(governance)
 app.include_router(data_source_router)
 app.include_router(dataset_router)
 app.include_router(simulator_router)

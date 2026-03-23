@@ -12,7 +12,7 @@ import TimeToChurn from "./pages/TimeToChurn";
 import UpliftActions from "./pages/UpliftActions";
 import BudgetOptimizer from "./pages/BudgetOptimizer";
 import AdminPanel from "./pages/AdminPanel";
-import Governance from "./pages/Governance";
+import GovernancePage from "./pages/GovernancePage";
 import ExecutiveInsights from "./pages/ExecutiveInsights";
 import CommandCenter from "./pages/CommandCenter";
 
@@ -36,7 +36,7 @@ export default function App() {
             </ProtectedRoute>
           }
         >
-          {/* ⭐ DEFAULT DASHBOARD PAGE */}
+          {/* DEFAULT */}
           <Route index element={<CommandCenter />} />
 
           {/* DATA */}
@@ -53,7 +53,9 @@ export default function App() {
           <Route path="budget" element={<BudgetOptimizer />} />
 
           {/* GOVERNANCE */}
-          <Route path="governance" element={<Governance />} />
+          <Route path="governance" element={<GovernancePage />} />
+
+          {/* ADMIN */}
           <Route path="admin" element={<AdminPanel />} />
 
           {/* EXECUTIVE */}

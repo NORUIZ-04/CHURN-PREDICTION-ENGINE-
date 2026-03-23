@@ -7,7 +7,7 @@ python-multipart
 joblib
 xgboost
 shap
-lifelines==0.28.0
+lifelines==0.29.0
 groq
 python-dotenv
 reportlab
@@ -19,3 +19,4 @@ sqlalchemy
 psycopg2-binary
 pymysql
 pymongo
+river
