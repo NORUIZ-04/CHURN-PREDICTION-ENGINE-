@@ -72,6 +72,10 @@ export const datasetApi = {
     getCommandCenter: (dataset) =>
       api.get("/dashboard/command-center", {
         params: { dataset }
-      })
-
+      }),
+      downloadExecutiveReport: (filename, budget = 5000) =>
+  api.get(`/report/executive/${filename}`, {
+    params: { budget },
+    responseType: "blob"   // 🔥 IMPORTANT
+  }),
 }

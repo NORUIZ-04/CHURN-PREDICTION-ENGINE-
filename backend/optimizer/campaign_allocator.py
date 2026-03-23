@@ -42,7 +42,8 @@ class CampaignAllocator:
                     "cost": t.cost,
                     "uplift": float(uplift_vec[i]),
                     "customer_value": float(cust_val),
-                    "gain": float(gain)
+                    "gain": float(gain),
+                    "roi": float(gain / t.cost) if t.cost > 0 else 0 
                 })
 
         return pd.DataFrame(rows)
@@ -53,8 +54,8 @@ class CampaignAllocator:
 
         score_df = self.score_population(df, customer_value_col)
 
-        # keep only positive gain actions
-        score_df = score_df[score_df.gain > 0]
+        # keep top candidates even if slightly negative
+        score_df = score_df.sort_values("gain", ascending=False).head(1000)
 
         # best action per customer
         best = (

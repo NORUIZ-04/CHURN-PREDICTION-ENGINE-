@@ -257,9 +257,9 @@ export default function BudgetOptimizer() {
 
   const filtered = useMemo(() => rows.filter(r => (r.roi ?? 0) >= minRoi), [rows, minRoi]);
   const sorted   = useMemo(() => [...filtered].sort((a,b) => (b[sortKey]??0)-(a[sortKey]??0)), [filtered, sortKey]);
-  const totalGain  = useMemo(() => sorted.reduce((s,r)=>s+(r.expected_gain??0),0), [sorted]);
+  const totalGain  = useMemo(() => sorted.reduce((s, r) => s + (r.expected_profit ?? 0), 0), [sorted]);
   const avgUplift  = useMemo(() => sorted.length ? sorted.reduce((s,r)=>s+(r.uplift??0),0)/sorted.length : 0, [sorted]);
-
+  console.log(totalGain)
   function exportCSV() {
     if (!sorted.length) return;
     const cols = Object.keys(sorted[0]);

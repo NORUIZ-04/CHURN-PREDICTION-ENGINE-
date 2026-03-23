@@ -241,7 +241,7 @@ export default function ExecutiveInsights() {
     setError(null);
 
     try {
-      const res = await datasetApi.fetchInsights();
+      const res = await datasetApi.executiveInsights(datasetName);
 
       // backend returns { insights: {...} }
       const payload = res.data.insights || res.data;

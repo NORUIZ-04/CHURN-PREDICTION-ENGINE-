@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { datasetApi } from "../api/datasetApi";
 import ActionSimulator from "../components/ActionSimulator";
+import { useDatasetStore } from "../store/datasetStore";
 
 const styles = `
   @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:wght@300;400;500&display=swap');
@@ -210,6 +211,30 @@ export default function Explainability() {
     setLoading(false);
   };
 
+const datasetPath = useDatasetStore(s => s.datasetPath);
+
+const handleDownloadReport = async () => {
+  if (!datasetPath) return;
+
+  try {
+    const filename = datasetPath.split("/").pop();
+
+    const res = await datasetApi.downloadExecutiveReport(filename, 5000);
+
+    const blob = new Blob([res.data], { type: "application/pdf" });
+    const url = window.URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `executive_report_${filename}.pdf`;
+    a.click();
+
+    window.URL.revokeObjectURL(url);
+
+  } catch (err) {
+    console.error("PDF download failed", err);
+  }
+};
   const predColor = result ? (result.probability > 0.7 ? "#ff4d6d" : result.probability > 0.4 ? "#ffc107" : "#00e5c3") : "#00e5c3";
   const maxShap   = result?.explanation ? Math.max(...result.explanation.map(f=>Math.abs(f.impact))) : 1;
 
@@ -259,6 +284,14 @@ export default function Explainability() {
       {/* RESULTS */}
       {result && (
         <div className="ex-results">
+                  <div style={{ marginBottom: 20, display: "flex", justifyContent: "flex-end" }}>
+          <button
+            className="ex-btn ex-btn-primary"
+            onClick={handleDownloadReport}
+          >
+            📄 Download Executive Report
+          </button>
+        </div>
 
           {/* PREDICTION */}
           <div className="ex-panel">

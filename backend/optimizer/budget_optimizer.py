@@ -14,26 +14,29 @@ class BudgetOptimizer:
     # --------------------------------------------------
 
     def build_items(self, uplift_vector, customer_value):
-        """
-        uplift_vector: {treatment_id: uplift}
-        """
 
         items = []
 
         for tid, uplift in uplift_vector.items():
 
             t = self.registry.get(int(tid))
+
             gain = compute_action_gain(
                 uplift,
                 customer_value,
                 t.cost
             )
 
+            # Skip useless actions
+            if gain <= 0:
+                continue
+
             items.append({
                 "treatment_id": tid,
                 "action": t.name,
                 "cost": t.cost,
-                "gain": gain
+                "gain": gain,
+                "roi": gain / t.cost if t.cost > 0 else 0
             })
 
         return items
