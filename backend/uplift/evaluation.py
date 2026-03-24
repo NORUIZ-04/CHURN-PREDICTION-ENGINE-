@@ -1,5 +1,3 @@
-# uplift/evaluation.py
-
 import numpy as np
 import pandas as pd
 
@@ -63,6 +61,19 @@ def qini_curve(y, t, uplift):
 
 
 # ----------------------------------------------------
+# Safe integration (NumPy version compatible)
+# ----------------------------------------------------
+
+def _integrate(xs, ys):
+    """
+    Handles both NumPy <2.0 (trapz) and >=2.0 (trapezoid)
+    """
+    if hasattr(np, "trapezoid"):
+        return np.trapezoid(ys, xs)
+    return np.trapz(ys, xs)
+
+
+# ----------------------------------------------------
 # AUUC Score (Area Under Uplift Curve)
 # ----------------------------------------------------
 
@@ -70,7 +81,7 @@ def auuc_score(xs, ys):
     if len(xs) == 0 or len(ys) == 0:
         return 0.0
 
-    return np.trapz(ys, xs)   # ✅ FIXED
+    return _integrate(xs, ys)
 
 
 # ----------------------------------------------------
@@ -84,8 +95,8 @@ def qini_coefficient(xs, ys):
     # Random baseline
     random_line = ys[-1] * xs
 
-    area_model = np.trapz(ys, xs)         # ✅ FIXED
-    area_random = np.trapz(random_line, xs)
+    area_model = _integrate(xs, ys)
+    area_random = _integrate(xs, random_line)
 
     return area_model - area_random
 

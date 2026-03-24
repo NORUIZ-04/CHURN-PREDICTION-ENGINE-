@@ -1,0 +1,9 @@
+# for backend 
+cd backend
+.\venv\Scripts\Activate
+python -m uvicorn app:app --reload
+
+
+#for frontend
+cd churn-dashboard
+npm run dev 

@@ -1,76 +1,40 @@
 /* =========================================================
-   1. GLOBAL RESET & FOUNDATION
+   CHURNGUARD — GLOBAL STYLES
+   Dark Intelligence Platform
 ========================================================= */
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:wght@300;400;500&display=swap');
 
-html, body, #root {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
+/* ── RESET ── */
+*, *::before, *::after { box-sizing: border-box; }
+html, body, #root { height: 100%; margin: 0; padding: 0; }
+body > div { min-height: 100%; }
+p { margin: 0; }
+h1,h2,h3,h4,h5,h6 { margin: 0; }
+a { text-decoration: none; }
 
-/* Remove Vite template centering */
-body > div {
-  min-height: 100%;
-}
-
+/* ── BASE ── */
 body {
-  background: #f8fafc;
-  color: #0f172a;
-  font-family: Inter, system-ui, -apple-system, sans-serif;
+  background: #080b10;
+  color: #e2e8f4;
+  font-family: 'DM Mono', monospace;
   line-height: 1.5;
   text-rendering: optimizeLegibility;
-}
-
-/* smoother fonts */
-* {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* =========================================================
-   2. TYPOGRAPHY NORMALIZATION
-========================================================= */
-
-h1,h2,h3,h4,h5,h6 {
-  margin: 0;
-  font-weight: 600;
-  color: #0f172a;
-}
-
-p { margin: 0; }
-
-a {
-  color: #4f46e5;
-  text-decoration: none;
-  font-weight: 500;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-/* =========================================================
-   3. DASHBOARD LAYOUT STRUCTURE
-========================================================= */
-
+/* ── LAYOUT ── */
 .dashboard-root {
   display: flex;
   height: 100vh;
   overflow: hidden;
 }
 
-/* SIDEBAR */
-
 .sidebar {
   width: 260px;
-  background: #0f172a;
-  color: white;
+  background: #080b10;
+  border-right: 1px solid #1e2530;
   padding: 22px 16px;
   display: flex;
   flex-direction: column;
@@ -78,267 +42,249 @@ a:hover {
   overflow-y: auto;
 }
 
-/* CONTENT AREA */
+.sidebar::-webkit-scrollbar { width: 4px; }
+.sidebar::-webkit-scrollbar-thumb { background: #1e2530; border-radius: 2px; }
 
 .main-area {
   flex: 1;
   overflow-y: auto;
-  padding: 36px 40px;
+  background: #080b10;
   display: flex;
   justify-content: center;
 }
 
+.main-area::-webkit-scrollbar { width: 6px; }
+.main-area::-webkit-scrollbar-thumb { background: #1e2530; border-radius: 3px; }
+
 .main-content {
   width: 100%;
   max-width: 1200px;
+  padding: 32px 36px;
 }
 
-/* =========================================================
-   4. SIDEBAR NAVIGATION
-========================================================= */
-
+/* ── SIDEBAR NAV ── */
 .sidebar a {
-  color: #cbd5f5;
+  color: #4a5568;
   text-decoration: none;
-  padding: 10px 12px;
+  padding: 9px 12px;
   border-radius: 8px;
-  margin-bottom: 6px;
-  font-size: 14px;
-  transition: 0.18s ease;
-  display: block;
+  margin-bottom: 2px;
+  font-size: 13px;
+  font-family: 'DM Mono', monospace;
+  transition: all 0.18s ease;
+  display: flex;
+  align-items: center;
+  gap: 9px;
 }
 
 .sidebar a:hover {
-  background: rgba(255,255,255,0.08);
-  color: #fff;
+  background: rgba(255,255,255,0.04);
+  color: #e2e8f4;
 }
 
 .active-link {
-  background: rgba(255,255,255,0.14);
-  color: white !important;
-  font-weight: 500;
+  background: rgba(0,229,195,0.08) !important;
+  color: #00e5c3 !important;
+  border: 1px solid rgba(0,229,195,0.15);
 }
 
-/* =========================================================
-   5. PAGE HEADER
-========================================================= */
-
-.page-header {
-  margin-bottom: 28px;
+/* ── TYPOGRAPHY ── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Syne', sans-serif;
+  color: #e2e8f4;
 }
 
-.page-title {
-  font-size: 28px;
-  font-weight: 600;
-}
-
-.page-subtitle {
-  color: #64748b;
-  font-size: 14px;
-}
-
-/* =========================================================
-   6. CARD DESIGN (PREMIUM)
-========================================================= */
-
+/* ── CARD ── */
 .card {
-  background: white;
-  border-radius: 14px;
+  background: #0f1218;
+  border: 1px solid #1e2530;
+  border-radius: 12px;
   padding: 22px;
-  margin-bottom: 20px;
-  box-shadow:
-    0 1px 2px rgba(0,0,0,0.05),
-    0 10px 24px rgba(0,0,0,0.05);
-  transition: 0.2s ease;
+  margin-bottom: 18px;
+  transition: border-color 0.2s, transform 0.2s;
 }
 
 .card:hover {
-  transform: translateY(-2px);
-  box-shadow:
-    0 12px 32px rgba(0,0,0,0.08);
+  border-color: rgba(0,229,195,0.12);
+  transform: translateY(-1px);
 }
 
-/* =========================================================
-   7. BUTTONS
-========================================================= */
-
+/* ── BUTTONS ── */
 button {
-  background: #2563eb;
-  color: white;
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  background: #00e5c3;
+  color: #080b10;
   border: none;
-  padding: 10px 16px;
+  padding: 10px 20px;
   border-radius: 8px;
   cursor: pointer;
-  font-size: 14px;
-  transition: 0.15s ease;
+  transition: all 0.18s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
-button:hover {
-  background: #1d4ed8;
+button:hover:not(:disabled) {
+  background: #00ffd5;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0,229,195,0.2);
 }
 
-button.secondary { background: #64748b; }
-button.success { background: #16a34a; }
-button.danger { background: #dc2626; }
+button:disabled { opacity: 0.45; cursor: not-allowed; }
 
-/* =========================================================
-   8. INPUTS & FORMS
-========================================================= */
+button.secondary {
+  background: #161b24;
+  color: #6b7a95;
+  border: 1px solid #1e2530;
+}
+button.secondary:hover:not(:disabled) {
+  border-color: rgba(0,229,195,0.3);
+  color: #00e5c3;
+  box-shadow: none;
+  background: #161b24;
+}
 
-input,
-select,
-textarea {
+button.danger {
+  background: rgba(255,77,109,0.1);
+  color: #ff4d6d;
+  border: 1px solid rgba(255,77,109,0.2);
+}
+button.danger:hover:not(:disabled) {
+  background: rgba(255,77,109,0.18);
+  box-shadow: none;
+}
+
+/* ── INPUTS ── */
+input, select, textarea {
   width: 100%;
-  padding: 10px 12px;
-  border: 1px solid #e2e8f0;
+  padding: 10px 14px;
+  border: 1px solid #1e2530;
   border-radius: 8px;
   margin-top: 6px;
   margin-bottom: 12px;
-  font-size: 14px;
-  background: white;
-}
-
-input:focus,
-textarea:focus {
+  font-size: 13px;
+  font-family: 'DM Mono', monospace;
+  background: #161b24;
+  color: #e2e8f4;
   outline: none;
-  border-color: #2563eb;
+  transition: border-color 0.2s;
 }
 
-/* =========================================================
-   9. TABLES (CLEAN ENTERPRISE STYLE)
-========================================================= */
+input:focus, textarea:focus, select:focus {
+  border-color: #00e5c3;
+  background: rgba(0,229,195,0.03);
+  box-shadow: 0 0 0 3px rgba(0,229,195,0.07);
+}
+
+input::placeholder, textarea::placeholder { color: #2d3748; }
+select option { background: #161b24; color: #e2e8f4; }
+
+/* ── TABLES (DARK — SITEWIDE FIX) ── */
+table, thead, tbody, tfoot, tr, th, td {
+  background-color: transparent !important;
+}
 
 table {
   width: 100%;
   border-collapse: collapse;
-  background: white;
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-thead {
-  background: #f1f5f9;
-}
-
-th, td {
-  padding: 12px;
-  text-align: left;
-  font-size: 14px;
-}
-
-tr:nth-child(even) {
-  background: #f8fafc;
-}
-
-tr:hover {
-  background: #e0f2fe;
-}
-
-/* =========================================================
-   10. BADGES & STATUS LABELS
-========================================================= */
-
-.badge {
-  padding: 4px 10px;
-  border-radius: 999px;
+  font-family: 'DM Mono', monospace;
   font-size: 12px;
-  font-weight: 600;
 }
 
-.badge-high {
-  background: #fee2e2;
-  color: #b91c1c;
+thead th {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #4a5568;
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid #1e2530;
+  background: #0f1218 !important;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  white-space: nowrap;
 }
 
-.badge-medium {
-  background: #fef3c7;
-  color: #92400e;
+tbody tr {
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  transition: background 0.12s;
 }
 
-.badge-low {
-  background: #dcfce7;
-  color: #166534;
+tbody tr:hover { background: rgba(255,255,255,0.02) !important; }
+tbody td { padding: 10px 14px; color: #e2e8f4; }
+
+/* ── BADGES ── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-family: 'DM Mono', monospace;
+  font-weight: 500;
 }
 
-/* =========================================================
-   11. GRID HELPERS
-========================================================= */
+.badge-high   { background: rgba(255,77,109,0.1);  color: #ff4d6d; border: 1px solid rgba(255,77,109,0.2); }
+.badge-medium { background: rgba(255,193,7,0.1);   color: #ffc107; border: 1px solid rgba(255,193,7,0.2); }
+.badge-low    { background: rgba(0,229,195,0.1);   color: #00e5c3; border: 1px solid rgba(0,229,195,0.2); }
+.badge-info   { background: rgba(124,106,255,0.1); color: #7c6aff; border: 1px solid rgba(124,106,255,0.2); }
 
-.grid-2 {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-}
-
-.grid-3 {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-}
-
-/* =========================================================
-   12. CHART & DATA VISUALIZATION FIXES
-========================================================= */
-
+/* ── CHART CARD ── */
 .chart-card {
   width: 100%;
-  height: 320px;
-  min-height: 320px;
-  background: white;
-  padding: 18px;
-  border-radius: 14px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+  min-height: 300px;
+  background: #0f1218;
+  border: 1px solid #1e2530;
+  padding: 20px;
+  border-radius: 12px;
 }
 
-.recharts-responsive-container {
-  min-width: 0 !important;
+.chart-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #e2e8f4;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #1e2530;
 }
 
-/* =========================================================
-   13. SCROLLBAR (MODERN)
-========================================================= */
+.recharts-responsive-container { min-width: 0 !important; }
 
-::-webkit-scrollbar {
-  width: 8px;
+/* ── GRIDS ── */
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+
+/* ── SCROLLBAR (GLOBAL) ── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #1e2530; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #2d3748; }
+
+/* ── PAGE HEADER ── */
+.page-header { margin-bottom: 28px; }
+.page-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 24px;
+  font-weight: 800;
+  color: #e2e8f4;
+  letter-spacing: -0.5px;
 }
+.page-subtitle { color: #4a5568; font-size: 12px; margin-top: 4px; }
 
-::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 999px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
-}
-
-/* =========================================================
-   14. RESPONSIVE IMPROVEMENTS
-========================================================= */
-
+/* ── RESPONSIVE ── */
 @media (max-width: 1024px) {
-  .main-area {
-    padding: 24px;
-  }
-
-  .main-content {
-    max-width: 100%;
-  }
+  .main-content { padding: 24px; }
 }
 
 @media (max-width: 768px) {
-  .sidebar {
-    display: none; /* mobile ready */
-  }
-
-  .main-area {
-    padding: 20px;
-  }
-
-  .grid-3 {
-    grid-template-columns: 1fr;
-  }
-
-  .grid-2 {
-    grid-template-columns: 1fr;
-  }
+  .sidebar { display: none; }
+  .main-content { padding: 16px; }
+  .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  .grid-2 { grid-template-columns: 1fr; }
 }
