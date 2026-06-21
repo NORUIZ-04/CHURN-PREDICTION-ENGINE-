@@ -10,6 +10,11 @@
 [![SHAP](https://img.shields.io/badge/SHAP-Explainability-FF4B4B?style=flat)](https://shap.readthedocs.io/)
 [![License](https://img.shields.io/badge/License-Add%20LICENSE-lightgrey?style=flat)](./LICENSE)
 
+<p align="center">
+  <img src="sampleoutput/RETENTION%20COMMAND%20CENTER.png" alt="Retention Command Center" width="850"/>
+</p>
+<p align="center"><em>Retention Command Center — the executive overview dashboard</em></p>
+
 ---
 
 ## 📋 Table of Contents
@@ -815,6 +820,11 @@ Executive insight computation modules, each covering one analytical dimension.
 | `validation/policy_evaluator.py` | Evaluates and compares policy outcomes (ROI, affected customers, expected recovery). |
 | `validation/uplift_metrics.py` | Custom uplift evaluation metrics beyond standard classification metrics. |
 
+<p align="center">
+  <img src="sampleoutput/DECILE%20LIFT%20TABLE.png" alt="Decile Lift Table" width="800"/>
+</p>
+<p align="center"><em>Decile Lift Table — uplift model evaluation output</em></p>
+
 ---
 
 ### Backend — `optimizer/`
@@ -959,6 +969,11 @@ Executive insight computation modules, each covering one analytical dimension.
 | **Time-to-Churn** | `ttc/TtcPanel.jsx`, `ttc/TtcTimelineChart.jsx`, `ttc/TtcUpliftHeatmap.jsx`, `ttc/UrgentDecisionPanel.jsx` | TTC urgency summary, timeline chart, uplift-by-TTC heatmap, and urgent action decision panel. |
 | **Uplift** | `uplift/UpliftVectorPanel.jsx`, `uplift/UpliftExplainPanel.jsx`, `uplift/UpliftEvaluationPanel.jsx`, `uplift/DecileLiftTable.jsx`, `uplift/OptimizerPanel.jsx`, `uplift/BudgetPanel.jsx`, `uplift/LLMPanel.jsx`, `uplift/StrategyPanel.jsx`, `uplift/UpliftBarChart.jsx`, `uplift/ExplainPanel.jsx` | Full uplift model UI suite: per-customer uplift vectors, SHAP-based explanation, model evaluation curves, decile lift table, budget optimiser panel, LLM-generated strategy text, policy-comparison panel, and bar chart. |
 
+<p align="center">
+  <img src="sampleoutput/UPLIFT.png" alt="Uplift Actions Dashboard" width="800"/>
+</p>
+<p align="center"><em>Uplift Actions — per-customer uplift scoring and recommended interventions</em></p>
+
 ---
 
 ### API Services, Hooks, Utilities & State
@@ -1035,15 +1050,12 @@ flowchart TD
 
 ---
 
-### Health
-
-| Method | Endpoint | Description |
-|---|---|---|
-| `GET` | `/` | Returns server status `{ "status": "ok" }`. |
-
----
-
 ### Data & Data Sources
+
+<p align="center">
+  <img src="sampleoutput/data%20page.png" alt="Data Source Page" width="800"/>
+</p>
+<p align="center"><em>Data Source page — upload, synthetic generation, and external DB ingestion</em></p>
 
 | Method | Endpoint | Description |
 |---|---|---|
@@ -1064,6 +1076,11 @@ flowchart TD
 ---
 
 ### Dataset Overview
+
+<p align="center">
+  <img src="sampleoutput/datasetoveerview.png" alt="Dataset Overview" width="800"/>
+</p>
+<p align="center"><em>Dataset Overview — summary cards, histograms, and segment analysis</em></p>
 
 | Method | Endpoint | Description |
 |---|---|---|
@@ -1105,6 +1122,16 @@ flowchart TD
 ---
 
 ### Survival, Time-to-Churn, Uplift, Decisions & Governance
+
+<p align="center">
+  <img src="sampleoutput/TTC.png" alt="Time to Churn" width="800"/>
+</p>
+<p align="center"><em>Time to Churn — urgency scoring and customer ranking</em></p>
+
+<p align="center">
+  <img src="sampleoutput/TTC%20MAP.png" alt="Time to Churn Map" width="800"/>
+</p>
+<p align="center"><em>Time to Churn Map — visual urgency distribution</em></p>
 
 | Method | Endpoint | Description |
 |---|---|---|
@@ -1224,6 +1251,11 @@ sequenceDiagram
 
 ### Decision & Budget Optimisation Flow
 
+<p align="center">
+  <img src="sampleoutput/BUDGET%20OPTIMIZER.png" alt="Budget Optimizer" width="800"/>
+</p>
+<p align="center"><em>Budget Optimizer — ROI-ranked, budget-constrained retention actions</em></p>
+
 ```mermaid
 sequenceDiagram
     participant User
@@ -1248,6 +1280,11 @@ sequenceDiagram
 ---
 
 ## 🔐 Authentication Flow
+
+<p align="center">
+  <img src="sampleoutput/login%20page.png" alt="Login Page" width="800"/>
+</p>
+<p align="center"><em>Login Page</em></p>
 
 > **⚠️ Current State:** Authentication is frontend-only. `ProtectedRoute.jsx` gates `/dashboard/*` routes using local client state, but **no backend authentication middleware or JWT validation was discovered.** All API endpoints are currently open.
 
