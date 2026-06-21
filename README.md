@@ -269,10 +269,6 @@ Customer-churn-prediction-main/
 │   │
 │   ├── cache/
 │   │   └── insights/
-│   │       ├── 563f34a8f9081096d8f89c703e0905a1.json
-│   │       ├── 78a67a1a9a3ad55f77ebdc4f14c27cf5.json
-│   │       ├── 7953bd421277d29d869f7a65ef1cfcf6.json
-│   │       └── 99d99a31278d68aa996043cdb0c33e46.json
 │   │
 │   ├── counterfactual/
 │   │   ├── model_store.py
@@ -284,37 +280,9 @@ Customer-churn-prediction-main/
 │   │   ├── dataset_registry.json
 │   │   ├── scoring_results.json
 │   │   ├── processed/
-│   │   │   ├── WA_Fn-UseC_-Telco-Customer-Churn.csv
-│   │   │   ├── dataset_20260302_152535.parquet
-│   │   │   ├── dataset_20260302_153450.parquet
-│   │   │   ├── dataset_20260302_153555.parquet
-│   │   │   ├── dataset_20260302_154416.parquet
-│   │   │   ├── processed_synthetic_12000.csv
-│   │   │   ├── processed_teleco_25000.csv
-│   │   │   ├── processed_teleco_6000.csv
-│   │   │   ├── processed_teleco_8000.csv
-│   │   │   └── teleco_5000.csv
 │   │   └── raw/
-│   │       ├── WA_Fn-UseC_-Telco-Customer-Churn.csv
-│   │       ├── churn_file.csv
-│   │       ├── processed_synthetic_12000.csv
-│   │       ├── processed_synthetic_25000.csv
-│   │       ├── processed_synthetic_5000.csv
-│   │       ├── processed_synthetic_6000.csv
-│   │       ├── processed_synthetic_8000.csv
-│   │       ├── processed_teleco_12000.csv
-│   │       ├── processed_teleco_6000.csv
-│   │       ├── synthetic_12000.csv
-│   │       ├── synthetic_25000.csv
-│   │       ├── synthetic_5000.csv
-│   │       ├── synthetic_6000.csv
-│   │       └── synthetic_8000.csv
 │   │
 │   ├── governance_logs/
-│   │   ├── processed_synthetic_5000_20260323_151348.json
-│   │   ├── processed_synthetic_5000_20260323_151453.json
-│   │   ├── processed_synthetic_5000_20260324_045624.json
-│   │   └── ... (31 timestamped governance log files total)
 │   │
 │   ├── ingestion/
 │   │   ├── pipeline.py
@@ -454,15 +422,6 @@ Customer-churn-prediction-main/
 │   │   └── results_store.py
 │   │
 │   ├── ttc_cache/
-│   │   ├── 1d83a6d01c2dc777bbb214ee786ea64a.json
-│   │   ├── 563f34a8f9081096d8f89c703e0905a1.json
-│   │   ├── 78a67a1a9a3ad55f77ebdc4f14c27cf5.json
-│   │   ├── 7953bd421277d29d869f7a65ef1cfcf6.json
-│   │   ├── 7e94e4ec0d080575e8dd65a426693364.json
-│   │   ├── 99d99a31278d68aa996043cdb0c33e46.json
-│   │   ├── 9ed7e8f0c8ea179d8f55ef9d3d1e68fd.json
-│   │   ├── b83ad5402c502a7988c1c94c8280776e.json
-│   │   └── d5df26f92971326805669e8ac06ab1ed.json
 │   │
 │   ├── uplift/
 │   │   ├── evaluation.py
@@ -484,49 +443,6 @@ Customer-churn-prediction-main/
 │   ├── uploads/
 │   │   ├── churn_file.csv
 │   │   ├── customer_file.csv
-│   │   ├── dataset_009e4e3bb5c9478e96dddf08d11da32e.csv
-│   │   ├── dataset_02ffb504d79d402799881477cdf42659.csv
-│   │   ├── dataset_1286b9049295433c9321e48fec8d1ffa.csv
-│   │   ├── dataset_1568540af19e4276a6024e30ac485c51.csv
-│   │   ├── dataset_15f54e1b4951433d9f1bde9e6de09c73.csv
-│   │   ├── dataset_1aef5e56106547e99925e06d8204dfed.csv
-│   │   ├── dataset_1bdeb7e51dcb40ed8fa95b8877d1ec67.csv
-│   │   ├── dataset_3c58f807964a47499e12d03dc887494f.csv
-│   │   ├── dataset_3d92fd7d55fb46e484326332bf3737f9.csv
-│   │   ├── dataset_508ee102f051443b96d0aeef0a22ea1f.csv
-│   │   ├── dataset_53af6a08ada64cb1a3f841c02239c08b.csv
-│   │   ├── dataset_54d642f0b1884cc09e5f05756e705723.csv
-│   │   ├── dataset_554bd7551a324ba1b20d6d21218d2f2f.csv
-│   │   ├── dataset_5ddf8e3ee7c0459db5e7c1a9e07792fa.csv
-│   │   ├── dataset_600c8d69abb046e2a9d20dd2d29b5e77.csv
-│   │   ├── dataset_64f84025e9ea44aa8557f405cc46cafc.csv
-│   │   ├── dataset_66e00ccc7cc5407a869a920d8a4710d9.csv
-│   │   ├── dataset_6a6dfe0f9df0457d9076d8accb308195.csv
-│   │   ├── dataset_6de97310e62d40fcb688abbf729130f0.csv
-│   │   ├── dataset_71282a9d03a342d8845ba8e8aabaf5af.csv
-│   │   ├── dataset_7a0e8a22841740f7beba93a0e9610fb6.csv
-│   │   ├── dataset_7b2fc3b1237341b8b86dece37c601c02.csv
-│   │   ├── dataset_7b3ec65a731e41268e1552af2c662c99.csv
-│   │   ├── dataset_7bc45304b15949ae86ba301cec88225e.csv
-│   │   ├── dataset_8304dfd4209e454fb2342d477b947842.csv
-│   │   ├── dataset_89f94f1b681b406581e5dcc7349574ec.csv
-│   │   ├── dataset_9034f7d4cf2a42e98dc0ce54f56c11ec.csv
-│   │   ├── dataset_95ef7932d5b744c785eca5038071e956.csv
-│   │   ├── dataset_992e052b9de64a6abd0093122a461d70.csv
-│   │   ├── dataset_a3bbcf304b074f168ab2246253545e58.csv
-│   │   ├── dataset_a69c7c48d61141968f9e2ffb3d139367.csv
-│   │   ├── dataset_badbac7bfdcb4d5cb86176222c568a7f.csv
-│   │   ├── dataset_bcb90da625c54fde87f204dc6905fb3d.csv
-│   │   ├── dataset_c4b9963c5d6a4b899cafb9ae2df6ad66.csv
-│   │   ├── dataset_c50cb01c9faf4d4f9fad2aaea969fe45.csv
-│   │   ├── dataset_d244c20798674651aeb846afe8cb2dbe.csv
-│   │   ├── dataset_dbc3690add224290a5430270b070006b.csv
-│   │   ├── dataset_e27ac632521f4550b59ec907a4e9190c.csv
-│   │   ├── dataset_e9f2f390b14a453d881022e419855575.csv
-│   │   ├── dataset_efb06f62b9684a3990396a406084de97.csv
-│   │   ├── synthetic_0cbea427b3374534855696462d34902c.csv
-│   │   ├── synthetic_3b9cc7efbff54b2aa86bf36e7b150741.csv
-│   │   └── synthetic_5cfddb9946d3489fa809ec0d4b1dea14.csv
 │   │
 │   └── utils/
 │       └── governance_logger.py
@@ -1692,30 +1608,21 @@ pytest --cov=. --cov-report=html
 
 ## 📄 License
 
-> **No license file was discovered in this repository.**
+This project is licensed under the **MIT License** — see the [LICENSE](./LICENSE) file for details.
 
-Add a `LICENSE` file before distributing, publishing, or using this project in a commercial environment. Recommended options:
-
-| License | Use Case |
-|---|---|
-| MIT | Permissive — open source, commercial use allowed. |
-| Apache 2.0 | Permissive with patent protection. |
-| GPL-3.0 | Copyleft — derivative works must also be open source. |
-| Proprietary | Closed source / internal enterprise use only. |
-
+Permissive license: anyone may use, modify, and distribute this code — including for commercial purposes — provided the original copyright notice is retained.
 ---
 
 ## 👤 Author
 
-> Author information was not explicitly found in the repository metadata scanned for this README.
-
-Add project owner, team, organisation, and contact details here.
+**Bharath Kumar V**
 
 ```
-Name:         <Your Name / Team Name>
-Organisation: <Company / University>
-Contact:      <Email / LinkedIn>
-GitHub:       <https://github.com/your-profile>
+Name:         Bharath Kumar V
+Organisation: S.A. Engineering College, Anna University, Chennai
+Contact:      bharathkumarofficial0409@gmail.com
+LinkedIn:     https://linkedin.com/in/bharath-kumar-v-
+GitHub:       https://github.com/NORUIZ-04
 ```
 
 ---
